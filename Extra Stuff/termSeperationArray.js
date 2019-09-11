@@ -1,4 +1,4 @@
-var initEquation = "1 + 22 - 3 / 5 * 178";
+var initEquation = "19758324 + -2235623482 - 3587234875 / 345687324659832475 * 17324985293745709238";
 var rerun = true
 
 function equationValidator(initSplit) {
