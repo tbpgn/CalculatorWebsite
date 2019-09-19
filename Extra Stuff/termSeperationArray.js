@@ -1,54 +1,35 @@
-var initEquation = "19758324 + -2235623482 - 3587234875 / 345687324659832475 * 17324985293745709238";
-var rerun = true
+var initEquation = "1+22341234-319473912*420348/5" // input equation. will be split into an array of terms
+var rerun //declare variable rerun. if this is true, equation will run though validator again
 
 function equationValidator(initSplit) {
-    rerun = false
-    var initSplitTypes = [];
-    console.log(initSplit);
-    for (let i = 0; i < initSplit.length; i++) {
-        if (isNaN(initSplit[i]) == true) {
-            initSplitTypes.push("Sym");
-        } else if (isNaN(initSplit[i]) == false) {
-            initSplitTypes.push("Nbr");
-        } else {
-            console.log("Somehow " + initSplit[i] + " is not a number nor a symbol");
-        }
+    rerun = false //sets rerun to false. will change to true if two coinciding numbers are combined
+    var initSplitTypes = []; //declares array telling whether or not are numbers
+    for (let i = 0; i < initSplit.length; i++) { //for as long as i is less than length of array while i is added every run...
+        if (isNaN(initSplit[i]) == true) { //if array at the value of i is not a number
+            initSplitTypes.push("Sym"); //add to types array in place of i "sym"
+        } else if (isNaN(initSplit[i]) == false) { //else if array at value of i is a number
+            initSplitTypes.push("Nbr"); //add to types array in place of i "nbr"
+        } else { console.log("Error 001") }; // if i is someone not a number nor a number
     }
 
     for (let x = 0; x < initSplitTypes.length; x++) {
-        if (initSplitTypes[x] == "Sym") {
-            console.log(initSplit[x] + " is Sym")
-        } else if (initSplitTypes[x] == "Nbr") {
-            console.log(initSplit[x] + " is Nbr")
+        if (initSplitTypes[x] == "Nbr") {
             if (initSplitTypes[x] == initSplitTypes[x + 1]) {
-                console.log("next element is Nbr")
                 var y = 1
                 var combine = initSplit[x].concat(initSplit[x + y])
-                console.log("combined elements: " + combine)
                 initSplit.splice(x, 1, combine);
                 initSplit.splice(x + 1, 1, "Dlt");
                 initSplitTypes.splice(x + 1, 1, "Dlt")
                 rerun = true
-            } else { console.log("next element is not Nbr") }
-        } else if (initSplitTypes[x] == "Dlt") {
-            console.log("To be Deleted")
+            }
         }
     }
-    console.log(initSplitTypes);
-    console.log(initSplit);
     equationResult = initSplit
-
 }
-
 var initEquation = initEquation.replace(/\s/g, '').split('');
 equationValidator(initEquation)
-
-var fil = function(val){
-    return val !== "Dlt";
-};
-
+var filterDlt = function(val){return val !== "Dlt";};
 while (rerun == true) {
-    equationResult = equationResult.filter(fil)
-    console.log("no Dlt? " + equationResult)
+    equationResult = equationResult.filter(filterDlt)
     equationValidator(equationResult)
 }
